@@ -1,3 +1,9 @@
+"""
+Author: Samarah Jorgensen
+Last Edited: 9/1/19
+A program that counts the number of occurences of each word in a file. 
+
+"""
 import re
 import sys
 def getWords(text):
@@ -5,7 +11,8 @@ def getWords(text):
     contents = file.read()
 
     words = re.split(r'\W+', contents, flags=re.IGNORECASE)
-
+    
+    #Takes off empty string
     filterWords = list(filter(None, words))
 
     lowerCaseWords = []
@@ -35,7 +42,6 @@ def writeToFile(wordDict):
 
 def main():
     text = sys.argv[1]
-    print(text)
     wd = getWords(text)
     writeToFile(wd)
 
