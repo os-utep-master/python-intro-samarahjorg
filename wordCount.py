@@ -1,5 +1,5 @@
 import re
-
+import sys
 def getWords(text):
     file = open(text)
     contents = file.read()
@@ -20,22 +20,25 @@ def getWords(text):
     for word in lowerCaseWords:
         if word not in wordDict:
             patt = r'\b' + word + r'\b'
-            wordDict[word.lower()] = len(re.findall(patt, contents, re.IGNORECASE))
+            wordDict.update({word.lower() : len(re.findall(patt, contents, re.IGNORECASE))})
 
     return wordDict
 
 
 def writeToFile(wordDict):
     file = open("output.txt", "w")
-    for word in wordDict:
-        file.write("%s %d\n" % (word, wordDict[word]))
+    for key,value in sorted(wordDict.items()):
+        file.write("%s %d\n" % (key, value))
     file.close()
 
 
+
 def main():
-    wd = getWords("declaration.txt")
-    print(wd)
+    text = sys.argv[1]
+    print(text)
+    wd = getWords(text)
     writeToFile(wd)
 
 if __name__ == "__main__":
     main()
+
